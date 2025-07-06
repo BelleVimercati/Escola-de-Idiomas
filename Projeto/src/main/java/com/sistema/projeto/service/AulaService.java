@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.sistema.projeto.model.Aula;
+import com.sistema.projeto.model.Funcionario;
+import com.sistema.projeto.model.enums.Cargo;
 import com.sistema.projeto.repository.AulaRepository;
+import com.sistema.projeto.repository.FuncionarioRepository;
 
 @Service
 public class AulaService {
@@ -15,7 +17,17 @@ public class AulaService {
     @Autowired
     private AulaRepository aulaRepository;
 
-    public Aula salvar(Aula aula) {
+    @Autowired
+    private FuncionarioRepository funcionarioRepository;
+
+    public Aula salvarComPermissao(Aula aula, Long funcionarioId){
+        Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+
+        if (funcionario.getCargo() != Cargo.SECRETARIO) {
+            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem criar aulas.");
+        }
+
         return aulaRepository.save(aula);
     }
 
@@ -27,19 +39,37 @@ public class AulaService {
         return aulaRepository.findById(id);
     }
 
-    public Aula atualizar(Long id, Aula novaAula) {
-        return aulaRepository.findById(id).map(aula -> {
+    public Aula atualizarComPermissao(Long id, Aula novaAula, Long funcionarioId) {
+        Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrada"));
+                
+        if (funcionario.getCargo() != Cargo.SECRETARIO) {
+            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem atualizar aulas.");
+        }
+
+        Aula aula = aulaRepository.findById(id).orElseThrow(() -> new RuntimeException("Aula não encontrado"));
+
             aula.setInicio(novaAula.getInicio());
             aula.setFim(novaAula.getFim());
             aula.setData(novaAula.getData());
             aula.setValor(novaAula.getValor());
             aula.setProfessor(novaAula.getProfessor());
             aula.setTurma(novaAula.getTurma());
+
+
             return aulaRepository.save(aula);
-        }).orElseThrow(() -> new RuntimeException("Aula não encontrada"));
     }
 
-    public void deletar(Long id) {
-        aulaRepository.deleteById(id);
+    public void deletarComPermissao(Long aulaId, Long funcionarioId){
+        Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+
+        if (funcionario.getCargo() != Cargo.SECRETARIO) {
+            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem deletar aulas.");
+        }
+
+        Aula aula = aulaRepository.findById(aulaId).orElseThrow(() -> new RuntimeException("Aula não encontrado."));
+
+        aulaRepository.delete(aula);
     }
 }

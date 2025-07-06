@@ -26,7 +26,7 @@ public class AlunoSerice {
                 .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
 
         if (funcionario.getCargo() != Cargo.SECRETARIO) {
-            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem criar aulas.");
+            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem criar alunos.");
         }
 
         if(alunoRepository.findById((long) aluno.getMatricula()).isPresent()){
@@ -53,7 +53,7 @@ public class AlunoSerice {
                 .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
 
         if (funcionario.getCargo() != Cargo.SECRETARIO) {
-            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem deletar aulas.");
+            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem deletar alunos.");
         }
 
         Aluno aluno = alunoRepository.findById(alunoId).orElseThrow(() -> new RuntimeException("Aluno não encontrado."));
@@ -66,7 +66,7 @@ public class AlunoSerice {
                 .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
                 
         if (funcionario.getCargo() != Cargo.SECRETARIO) {
-            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem deletar aulas.");
+            throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem atualizar alunos.");
         }
 
         Aluno aluno = alunoRepository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
