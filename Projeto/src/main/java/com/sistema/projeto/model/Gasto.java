@@ -21,13 +21,14 @@ public class Gasto {
     @Column(nullable = false)
     private String descricao;
     
-    @Column(nullable = false)
-    private LocalDate dataRegistro = LocalDate.now();
+    @Column(name = "data_registro", nullable = false)
+    private LocalDate data = LocalDate.now();
 
     
     public Gasto(Float valor, String descricao) {
         this.valor = valor;
         this.descricao = descricao;
+        this.data = LocalDate.now();
     }
 
     public Gasto() {}
@@ -52,7 +53,7 @@ public class Gasto {
         this.descricao = descricao;
     }
 
-    public LocalDate getDataRegistro() {
-        return dataRegistro;
+    public LocalDate getData() {
+        return data;
     }
 }

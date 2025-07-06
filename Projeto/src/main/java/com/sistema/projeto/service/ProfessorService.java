@@ -34,6 +34,7 @@ public class ProfessorService {
             professor.setNome(atualizado.getNome());
             professor.setEndereco(atualizado.getEndereco());
             professor.setTelefone(atualizado.getTelefone());
+            professor.setSalario(atualizado.getSalario());
             return professorRepository.save(professor);
         }).orElseThrow(() -> new RuntimeException("Professor não encontrado"));
     }
