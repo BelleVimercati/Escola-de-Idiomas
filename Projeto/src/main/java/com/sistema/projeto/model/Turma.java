@@ -1,5 +1,5 @@
 package com.sistema.projeto.model;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistema.projeto.model.enums.Idioma;
 import com.sistema.projeto.model.enums.Nivel;
 import java.time.LocalDate;
@@ -37,13 +37,12 @@ public class Turma {
 
     /* Turma tem uma lista de alunos */
     @ManyToMany(mappedBy = "turmas")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Aluno> alunos = new ArrayList<>();
 
     @OneToMany(mappedBy = "turma")
+    @JsonIgnore
     private List<Aula> aulas = new ArrayList<>();
-
-
 
     // Ajustar
     public Turma(Idioma idioma, Nivel nivel, LocalDateTime inicio, LocalDateTime fim, LocalDate data, String identificador) {

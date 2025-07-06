@@ -24,9 +24,10 @@ public class AulaController {
     @Autowired
     private AulaService aulaService;
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<?> criar(@RequestBody Aula aula, @RequestParam Long funcionarioId) {
         try {
+            System.out.println("Funcionario ID recebido: " + funcionarioId);
             Aula salva = aulaService.salvarComPermissao(aula, funcionarioId);
             return ResponseEntity.ok(salva);
         } catch (RuntimeException e) {
