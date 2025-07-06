@@ -41,6 +41,14 @@ public class Professor extends Usuario {
         return id;
     }
 
+    public int getSalario() {
+        return salario;
+    }
+
+    public void setSalario(int salario) {
+        this.salario = salario;
+    }
+
     public List<Aula> getAulas() {
         return aulas;
     }

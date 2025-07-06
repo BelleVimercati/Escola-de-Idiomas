@@ -52,7 +52,6 @@ public class AulaService {
             aula.setInicio(novaAula.getInicio());
             aula.setFim(novaAula.getFim());
             aula.setData(novaAula.getData());
-            aula.setValor(novaAula.getValor());
             aula.setProfessor(novaAula.getProfessor());
             aula.setTurma(novaAula.getTurma());
 

@@ -20,9 +20,6 @@ public class Aula {
     @Column(name = "data")
     private LocalDate data; 
 
-    @Column(name = "valor", nullable = false)
-    private Float valor;
-
     @ManyToOne
     @JoinColumn(name="professor_id")
     private Professor professor;
@@ -33,11 +30,10 @@ public class Aula {
 
 
     // Ajustar a questão de data aqui
-    public Aula(LocalDateTime inicio, LocalDateTime fim, LocalDate data, Float valor) {
+    public Aula(LocalDateTime inicio, LocalDateTime fim, LocalDate data) {
         this.inicio = inicio;
         this.fim = fim;
         this.data = data;
-        this.valor = valor;
     }
 
     public Aula() {
@@ -69,14 +65,6 @@ public class Aula {
 
     public void setData(LocalDate data) {
         this.data = data;
-    }
-
-    public Float getValor() {
-        return valor;
-    }
-
-    public void setValor(Float valor) {
-        this.valor = valor;
     }
 
     public Professor getProfessor() {
