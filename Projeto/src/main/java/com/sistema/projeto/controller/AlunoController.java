@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.sistema.projeto.model.Aluno;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.projeto.service.AlunoSerice;
@@ -31,9 +31,13 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<Aluno> criar(@RequestBody Aluno aluno){
-        Aluno novoAluno = alunoService.salvar(aluno);
-        return ResponseEntity.ok(novoAluno);
+    public ResponseEntity<?> criar(@RequestBody Aluno aluno, @RequestParam Long funcionarioId){
+        try {
+            Aluno salva = alunoService.salvarComPermissao(aluno, funcionarioId);
+            return ResponseEntity.ok(salva);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
@@ -44,18 +48,22 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Aluno> atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Aluno aluno, @RequestParam Long funcionarioId) {
         try {
-            Aluno atualizado = alunoService.atualizar(id, aluno);
+            Aluno atualizado = alunoService.atualizarComPermissao(id, aluno, funcionarioId);
             return ResponseEntity.ok(atualizado);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        alunoService.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deletar(@PathVariable Long id, @RequestParam Long funcionarioId) {
+        try {
+            alunoService.deletarComPermissao(id, funcionarioId);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
