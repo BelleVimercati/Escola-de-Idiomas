@@ -16,6 +16,9 @@ public class Turma {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "identificador", nullable = false)
+    private String identificador;
+
     @Enumerated(EnumType.STRING)
     private Idioma idioma;
 
@@ -41,12 +44,13 @@ public class Turma {
 
 
     // Ajustar
-    public Turma(Idioma idioma, Nivel nivel, LocalDateTime inicio, LocalDateTime fim, LocalDate data) {
+    public Turma(Idioma idioma, Nivel nivel, LocalDateTime inicio, LocalDateTime fim, LocalDate data, String identificador) {
         this.idioma = idioma;
         this.nivel = nivel;
         this.inicio = inicio;
         this.fim = fim;
         this.data = data;
+        this.identificador = identificador;
     }
 
     public Turma() {
@@ -55,6 +59,15 @@ public class Turma {
 
     public Long getId() {
         return id;
+    }
+
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
     }
 
     public Idioma getIdioma() {
@@ -118,6 +131,10 @@ public class Turma {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public List<Aula> getAulas() {
+        return aulas;
     }
 
     
