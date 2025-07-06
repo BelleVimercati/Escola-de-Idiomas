@@ -1,4 +1,5 @@
 package com.sistema.projeto.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sistema.projeto.model.enums.Idioma;
 import com.sistema.projeto.model.enums.Nivel;
 import java.time.LocalDate;
@@ -15,6 +16,9 @@ public class Turma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "identificador", nullable = false)
+    private String identificador;
 
     @Enumerated(EnumType.STRING)
     private Idioma idioma;
@@ -33,20 +37,21 @@ public class Turma {
 
     /* Turma tem uma lista de alunos */
     @ManyToMany(mappedBy = "turmas")
+    @JsonIgnore
     private List<Aluno> alunos = new ArrayList<>();
 
     @OneToMany(mappedBy = "turma")
+    @JsonIgnore
     private List<Aula> aulas = new ArrayList<>();
 
-
-
     // Ajustar
-    public Turma(Idioma idioma, Nivel nivel, LocalDateTime inicio, LocalDateTime fim, LocalDate data) {
+    public Turma(Idioma idioma, Nivel nivel, LocalDateTime inicio, LocalDateTime fim, LocalDate data, String identificador) {
         this.idioma = idioma;
         this.nivel = nivel;
         this.inicio = inicio;
         this.fim = fim;
         this.data = data;
+        this.identificador = identificador;
     }
 
     public Turma() {
@@ -55,6 +60,24 @@ public class Turma {
 
     public Long getId() {
         return id;
+    }
+
+    
+
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
     }
 
     public Idioma getIdioma() {
@@ -118,6 +141,10 @@ public class Turma {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public List<Aula> getAulas() {
+        return aulas;
     }
 
     

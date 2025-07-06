@@ -3,6 +3,8 @@ package com.sistema.projeto.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 
@@ -21,6 +23,7 @@ public class Aluno extends Usuario{
     private String email;
 
     @ManyToMany
+    @JsonBackReference
     @JoinTable(
         name = "aluno_turma",
         joinColumns = @JoinColumn(name = "aluno_id"),

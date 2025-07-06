@@ -2,6 +2,8 @@ package com.sistema.projeto.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,9 +18,13 @@ public class Professor extends Usuario {
     private int matricula;
 
     @Column(nullable = false, unique = true)
+    private int salario;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @OneToMany(mappedBy = "professor")
+    @JsonIgnore
     private List<Aula> aulas = new ArrayList<>();
 
     public Professor() {
@@ -29,6 +35,22 @@ public class Professor extends Usuario {
         super(nome, endereco, telefone);
         this.matricula = matricula;
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getSalario() {
+        return salario;
+    }
+
+    public void setSalario(int salario) {
+        this.salario = salario;
+    }
+
+    public List<Aula> getAulas() {
+        return aulas;
     }
 
     public int getMatricula() {

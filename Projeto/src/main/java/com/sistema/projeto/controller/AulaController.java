@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,20 +11,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.projeto.model.Aula;
 import com.sistema.projeto.service.AulaService;
 
-@Controller
+@RestController
 @RequestMapping("aulas")
 public class AulaController {
     
     @Autowired
     private AulaService aulaService;
 
-    @PostMapping
-    public Aula criar(@RequestBody Aula aula) {
-        return aulaService.salvar(aula);
+    @PostMapping(consumes = "application/json")
+    public ResponseEntity<?> criar(@RequestBody Aula aula, @RequestParam Long funcionarioId) {
+        try {
+            System.out.println("Funcionario ID recebido: " + funcionarioId);
+            Aula salva = aulaService.salvarComPermissao(aula, funcionarioId);
+            return ResponseEntity.ok(salva);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
@@ -41,18 +48,25 @@ public class AulaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Aula> atualizar(@PathVariable Long id, @RequestBody Aula aula) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Aula aula, @RequestParam Long funcionarioId) {
         try {
-            Aula atualizada = aulaService.atualizar(id, aula);
+            Aula atualizada = aulaService.atualizarComPermissao(id, aula, funcionarioId);
             return ResponseEntity.ok(atualizada);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        aulaService.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deletar(@PathVariable Long id, @RequestParam Long funcionarioId) {
+        try{
+            aulaService.deletarComPermissao(id, funcionarioId);
+            return ResponseEntity.noContent().build();
+        }catch(RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
+
+    
 }
