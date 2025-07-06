@@ -1,6 +1,7 @@
 package com.sistema.projeto.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sistema.projeto.model.Aluno;
 import com.sistema.projeto.model.Turma;
 import com.sistema.projeto.service.TurmaService;
 
@@ -64,4 +66,16 @@ public class TurmaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/{id}/alunos")
+    public ResponseEntity<List<Aluno>> listarAlunosDaTurma(@PathVariable Long id) {
+        Optional<Turma> turma = turmaService.buscarPorId(id);
+
+        if (turma.isPresent()) {
+            return ResponseEntity.ok(turma.get().getAlunos());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

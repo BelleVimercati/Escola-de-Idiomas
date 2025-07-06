@@ -66,4 +66,18 @@ public class AlunoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/{alunoId}/adicionar-turma")
+    public ResponseEntity<?> adicionarTurmaParaAluno(
+            @PathVariable Long alunoId,
+            @RequestParam Long turmaId,
+            @RequestParam Long funcionarioId) {
+        try {
+            Aluno atualizado = alunoService.adicionarTurmaParaAluno(funcionarioId, alunoId, turmaId);
+            return ResponseEntity.ok(atualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
 package com.sistema.projeto.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sistema.projeto.model.enums.Idioma;
 import com.sistema.projeto.model.enums.Nivel;
 import java.time.LocalDate;
@@ -36,6 +37,7 @@ public class Turma {
 
     /* Turma tem uma lista de alunos */
     @ManyToMany(mappedBy = "turmas")
+    @JsonManagedReference
     private List<Aluno> alunos = new ArrayList<>();
 
     @OneToMany(mappedBy = "turma")
@@ -61,6 +63,15 @@ public class Turma {
         return id;
     }
 
+    
+
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
 
     public String getIdentificador() {
         return identificador;

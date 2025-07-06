@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.projeto.model.Aluno;
 import com.sistema.projeto.model.Funcionario;
+import com.sistema.projeto.model.Turma;
 import com.sistema.projeto.model.enums.Cargo;
 import com.sistema.projeto.repository.AlunoRepository;
 import com.sistema.projeto.repository.FuncionarioRepository;
+import com.sistema.projeto.repository.TurmaRepository;
 
 @Service
 public class AlunoSerice {
@@ -20,6 +22,9 @@ public class AlunoSerice {
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
+    
+    @Autowired
+    private TurmaRepository turmaRepository;
 
     public Aluno salvarComPermissao(Aluno aluno, Long funcionarioId){
         Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
@@ -80,5 +85,28 @@ public class AlunoSerice {
 
             return alunoRepository.save(aluno);
     }
+
+    public Aluno adicionarTurmaParaAluno(Long funcionarioId, Long alunoId, Long turmaId) {
+    Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
+            .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+
+    if (funcionario.getCargo() != Cargo.SECRETARIO) {
+        throw new RuntimeException("Apenas funcionários com cargo SECRETARIO podem adicionar alunos em turmas.");
+    }
+
+    Aluno aluno = alunoRepository.findById(alunoId)
+            .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+
+    Turma turma = turmaRepository.findById(turmaId)
+            .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+
+    if (aluno.getTurmas().contains(turma)) {
+        throw new RuntimeException("Turma já está associada ao aluno.");
+    }
+
+    aluno.getTurmas().add(turma);
+    return alunoRepository.save(aluno);
+}
+
 }
 

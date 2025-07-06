@@ -65,4 +65,7 @@ public class AulaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
+    
 }
