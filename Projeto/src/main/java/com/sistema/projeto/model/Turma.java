@@ -35,6 +35,9 @@ public class Turma {
     @Column(nullable = false)
     private LocalDate data;
 
+    @Column(nullable = false)
+    private Float valor;
+
     /* Turma tem uma lista de alunos */
     @ManyToMany(mappedBy = "turmas")
     @JsonIgnore
@@ -62,7 +65,13 @@ public class Turma {
         return id;
     }
 
-    
+    public Float getValor() {
+        return valor;
+    }
+
+    public void setValor(Float valor) {
+        this.valor = valor;
+    }
 
     public List<Aluno> getAlunos() {
         return alunos;
