@@ -1,0 +1,23 @@
+.TelaContainer {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  min-width: 100vw;
+}
+
+.Span {
+  background-color: blueviolet;
+  min-height: 100vh;
+}
+
+.textoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.texto{
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
