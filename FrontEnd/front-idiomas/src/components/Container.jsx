@@ -8,6 +8,7 @@ const Container = ({ children }) => {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#f5f4ff", // fundo claro
+        minHeight: "100vh"
       }}
     >
       {children}

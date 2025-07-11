@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Lista.module.css";
+import { useNavigate } from "react-router-dom";
 
 const ListaGastos = () => {
+  const navigate = useNavigate();
+
+  const handleAdicionar = () => {
+    navigate("/gastos/novo");
+  };
+
   const [gastos, setGastos] = useState([]);
 
   useEffect(() => {
@@ -12,15 +19,14 @@ const ListaGastos = () => {
   }, []);
 
   const handleEditar = (id) => {
-    console.log("Editar gasto com ID:", id);
-    // Redirecionar para página de edição, se necessário
+      navigate(`/gastos/${id}/editar`);
   };
 
   const handleExcluir = (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/gastos/${id}`, {
+    fetch(`http://localhost:8080/gastos/${id}?funcionarioId=1`, {
       method: "DELETE",
     })
       .then(() => {
@@ -31,6 +37,10 @@ const ListaGastos = () => {
 
   return (
     <div className={styles.container}>
+      <button className={styles.adicionar} onClick={handleAdicionar}>
+        Adicionar
+      </button>
+
       <table className={styles.tabela}>
         <thead>
           <tr>

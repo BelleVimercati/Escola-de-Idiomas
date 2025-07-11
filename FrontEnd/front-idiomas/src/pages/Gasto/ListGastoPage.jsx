@@ -9,7 +9,7 @@ const ListGastoPage = () => {
     <div>
       <Header />
       <Container2>
-        <Title>Turmas</Title>
+        <Title>Gastos</Title>
         <ListaGasto />
       </Container2>
     </div>

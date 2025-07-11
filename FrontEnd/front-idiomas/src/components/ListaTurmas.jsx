@@ -21,7 +21,7 @@ const ListaTurmas = () => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/turmas/${id}`, {
+    fetch(`http://localhost:8080/turmas/${id}?funcionarioId=2`, {
       method: "DELETE",
     })
       .then(() => {

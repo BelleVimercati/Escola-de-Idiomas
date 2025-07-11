@@ -41,3 +41,19 @@
   cursor: pointer;
   border-radius: 4px;
 }
+
+.adicionar {
+  background-color: #4caf5c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  max-width: 100px;
+  align-self: flex-end;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+}

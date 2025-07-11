@@ -21,7 +21,7 @@ const ListaProfessores = () => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/professores/${id}`, {
+    fetch(`http://localhost:8080/professores/${id}?funcionarioId=2`, {
       method: "DELETE",
     })
       .then(() => {

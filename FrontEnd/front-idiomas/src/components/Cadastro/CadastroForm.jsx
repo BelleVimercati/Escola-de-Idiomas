@@ -1,6 +1,6 @@
-import styles from "../styles/LoginForm.module.css";
-import Input from "./Input";
-import Button from "./Button";
+import styles from "../../styles/LoginForm.module.css";
+import Input from "../Input";
+import Button from "../Button";
 
 const CadastroForm = () => {
   return (
