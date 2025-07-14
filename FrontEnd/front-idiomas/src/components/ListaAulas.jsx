@@ -2,36 +2,37 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/Lista.module.css";
 import { useNavigate } from "react-router-dom";
 
-const ListaProfessores = () => {
+const ListaAulas = () => {
   const navigate = useNavigate();
-  const [professores, setProfessores] = useState([]);
 
   const handleAdicionar = () => {
-    navigate("/professores/novo");
+    navigate("/aulas/novo");
   };
 
+  const [aulas, setAulas] = useState([]);
+
   useEffect(() => {
-    fetch("http://localhost:8080/professores")
+    fetch("http://localhost:8080/aulas")
       .then((res) => res.json())
-      .then((data) => setProfessores(data))
-      .catch((err) => console.error("Erro ao buscar professores:", err));
+      .then((data) => setAulas(data))
+      .catch((err) => console.error("Erro ao buscar aulas:", err));
   }, []);
 
   const handleEditar = (id) => {
-    navigate(`/professores/${id}/editar`);
+    navigate(`/aulas/${id}/editar`);
   };
 
   const handleExcluir = (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/professores/${id}?funcionarioId=2`, {
+    fetch(`http://localhost:8080/aulas/${id}?funcionarioId=2`, {
       method: "DELETE",
     })
       .then(() => {
-        setProfessores((prev) => prev.filter((prof) => prof.id !== id));
+        setAulas((prev) => prev.filter((aulas) => aulas.id !== id));
       })
-      .catch((err) => console.error("Erro ao excluir professor:", err));
+      .catch((err) => console.error("Erro ao excluir aulas:", err));
   };
 
   return (
@@ -39,31 +40,40 @@ const ListaProfessores = () => {
       <button className={styles.adicionar} onClick={handleAdicionar}>
         Adicionar
       </button>
+
       <table className={styles.tabela}>
         <thead>
           <tr>
-            <th>Nome</th>
-            <th>Matrícula</th>
-            <th>Email</th>
+            <th>Turma ID</th>
+            <th>Professor</th>
+            <th>Data da aula</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          {professores.map((prof) => (
-            <tr key={prof.id}>
-              <td>{prof.nome}</td>
-              <td>{prof.matricula}</td>
-              <td>{prof.email}</td>
+          {aulas.map((aula) => (
+            <tr key={aula.id}>
+              <td>
+                {aula.turma
+                  ? `${aula.turma.identificador} - ${aula.turma.idioma} (${aula.turma.nivel})`
+                  : "Turma não vinculada"}
+              </td>
+              <td>
+                {aula.professor
+                  ? `${aula.professor.nome} - ${aula.professor.matricula}`
+                  : "Professor não vinculado"}
+              </td>
+              <td>{aula.data}</td>
               <td>
                 <button
                   className={styles.editar}
-                  onClick={() => handleEditar(prof.id)}
+                  onClick={() => handleEditar(aula.id)}
                 >
                   Editar
                 </button>
                 <button
                   className={styles.excluir}
-                  onClick={() => handleExcluir(prof.id)}
+                  onClick={() => handleExcluir(aula.id)}
                 >
                   Excluir
                 </button>
@@ -76,4 +86,4 @@ const ListaProfessores = () => {
   );
 };
 
-export default ListaProfessores;
+export default ListaAulas;

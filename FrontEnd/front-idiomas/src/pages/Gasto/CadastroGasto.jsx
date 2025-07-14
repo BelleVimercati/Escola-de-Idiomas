@@ -3,9 +3,12 @@ import CadastroGastoForm from "../../components/Cadastro/CadastroGasto";
 
 const CadastroGasto = () => {
   return (
-    <Container>
-      <CadastroGastoForm />
-    </Container>
+    <div>
+      <Header />
+      <Container>
+        <CadastroGastoForm />
+      </Container>
+    </div>
   );
 };
 

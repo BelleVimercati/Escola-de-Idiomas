@@ -1,5 +1,5 @@
-import Container from "../components/Container";
-import CadastroForm from "../components/CadastroForm";
+import Container from "../../components/Container";
+import CadastroForm from "../../components/Cadastro/CadastroForm";
 
 const CadastroAlunosPage = () =>{
     return(

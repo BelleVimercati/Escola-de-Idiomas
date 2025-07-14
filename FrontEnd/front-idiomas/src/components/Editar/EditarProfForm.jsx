@@ -1,10 +1,11 @@
 import styles from "../../styles/LoginForm.module.css";
 import Input from "../Input";
 import Button from "../Button";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-const CadastroAlunoForm = () => {
+const EditarProfessorForm = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
@@ -12,34 +13,50 @@ const CadastroAlunoForm = () => {
   const [matricula, setMatricula] = useState("");
   const [endereco, setEndereco] = useState("");
   const [telefone, setTelefone] = useState("");
+  const [salario, setSalario] = useState("");
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/professores/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setNome(data.nome);
+        setEmail(data.email);
+        setMatricula(data.matricula);
+        setEndereco(data.endereco);
+        setTelefone(data.telefone);
+        setSalario(data.salario);
+      })
+      .catch((err) => alert("Erro ao carregar professor: " + err.message));
+  }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const novoAluno = {
+    const professorAtualizado = {
       nome,
       email,
       matricula: parseInt(matricula),
       endereco,
       telefone,
+      salario: parseFloat(salario),
     };
 
-    fetch("http://localhost:8080/alunos?funcionarioId=2", {
-      method: "POST",
+    fetch(`http://localhost:8080/professores/${id}`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(novoAluno),
+      body: JSON.stringify(professorAtualizado),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Erro ao cadastrar aluno");
-        alert("Aluno cadastrado com sucesso!");
-        navigate("/alunos"); // redirecionar para lista de alunos, se existir
+        if (!res.ok) throw new Error("Erro ao editar professor");
+        alert("Professor atualizado com sucesso!");
+        navigate("/professores"); // ajuste conforme sua rota de listagem
       })
       .catch((err) => alert("Erro: " + err.message));
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.card}>
-      <h2 className={styles.title}>Cadastro de alunos</h2>
+      <h2 className={styles.title}>Editar professor</h2>
 
       <label className={styles.label}>Nome</label>
       <Input
@@ -55,7 +72,7 @@ const CadastroAlunoForm = () => {
         onChange={(e) => setEmail(e.target.value)}
       />
 
-      <label className={styles.label}>Matricula</label>
+      <label className={styles.label}>Matrícula</label>
       <Input
         type="text"
         value={matricula}
@@ -76,9 +93,17 @@ const CadastroAlunoForm = () => {
         onChange={(e) => setTelefone(e.target.value)}
       />
 
-      <Button text="Cadastrar" />
+      <label className={styles.label}>Salário</label>
+      <Input
+        type="number"
+        step="0.01"
+        value={salario}
+        onChange={(e) => setSalario(e.target.value)}
+      />
+
+      <Button text="Salvar alterações" />
     </form>
   );
 };
 
-export default CadastroAlunoForm;
+export default EditarProfessorForm;

@@ -1,10 +1,11 @@
 import styles from "../../styles/LoginForm.module.css";
 import Input from "../Input";
 import Button from "../Button";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-const CadastroAlunoForm = () => {
+const EditarAlunoForm = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
@@ -13,10 +14,23 @@ const CadastroAlunoForm = () => {
   const [endereco, setEndereco] = useState("");
   const [telefone, setTelefone] = useState("");
 
+  useEffect(() => {
+    fetch(`http://localhost:8080/alunos/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setNome(data.nome);
+        setEmail(data.email);
+        setMatricula(data.matricula);
+        setEndereco(data.endereco);
+        setTelefone(data.telefone);
+      })
+      .catch((err) => alert("Erro ao carregar aluno: " + err.message));
+  }, [id]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const novoAluno = {
+    const alunoAtualizado = {
       nome,
       email,
       matricula: parseInt(matricula),
@@ -24,22 +38,22 @@ const CadastroAlunoForm = () => {
       telefone,
     };
 
-    fetch("http://localhost:8080/alunos?funcionarioId=2", {
-      method: "POST",
+    fetch(`http://localhost:8080/alunos/${id}?funcionarioId=2`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(novoAluno),
+      body: JSON.stringify(alunoAtualizado),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Erro ao cadastrar aluno");
-        alert("Aluno cadastrado com sucesso!");
-        navigate("/alunos"); // redirecionar para lista de alunos, se existir
+        if (!res.ok) throw new Error("Erro ao editar aluno");
+        alert("Aluno atualizado com sucesso!");
+        navigate("/alunos");
       })
       .catch((err) => alert("Erro: " + err.message));
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.card}>
-      <h2 className={styles.title}>Cadastro de alunos</h2>
+      <h2 className={styles.title}>Editar aluno</h2>
 
       <label className={styles.label}>Nome</label>
       <Input
@@ -76,9 +90,9 @@ const CadastroAlunoForm = () => {
         onChange={(e) => setTelefone(e.target.value)}
       />
 
-      <Button text="Cadastrar" />
+      <Button text="Salvar alterações" />
     </form>
   );
 };
 
-export default CadastroAlunoForm;
+export default EditarAlunoForm;

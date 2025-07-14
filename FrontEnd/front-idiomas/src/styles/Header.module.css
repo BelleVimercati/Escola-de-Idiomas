@@ -6,7 +6,7 @@
   background-color: #7a4ef2;
   color: aliceblue;
   padding: 1rem 2rem;
-  border-radius:0 4px 0 4px ;
+  border-radius: 0 4px 0 4px;
   box-sizing: border-box;
 }
 
@@ -18,6 +18,12 @@
 .title {
   margin: 0;
   font-size: 1.5rem;
+  color: #f8f7ff;
+  font-weight: bold;
+}
+
+.title:hover {
+  color: #f8f7ff;
 }
 
 .button {
@@ -29,6 +35,6 @@
   font-weight: bold;
 }
 
-.button:hover{
-    color: #c1a9ff;
+.button:hover {
+  color: #c1a9ff;
 }

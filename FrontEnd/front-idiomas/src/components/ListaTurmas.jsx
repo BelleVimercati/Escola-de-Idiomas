@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Lista.module.css";
+import { useNavigate } from "react-router-dom";
 
 const ListaTurmas = () => {
+  const navigate = useNavigate();
   const [turmas, setTurmas] = useState([]);
+
+  const handleAdicionar = () => {
+    navigate("/turmas/novo");
+  };
 
   useEffect(() => {
     fetch("http://localhost:8080/turmas")
@@ -12,9 +18,11 @@ const ListaTurmas = () => {
   }, []);
 
   const handleEditar = (id) => {
-    console.log("Editar turmas com ID:", id);
-    // Aqui você pode redirecionar para a página de edição, ex:
-    // navigate(`/professores/editar/${id}`);
+    navigate(`/turmas/${id}/editar`);
+  };
+
+  const handleAdicionarTurma = (id) => {
+    navigate(`/turmas/${id}/adicionar-aluno`);
   };
 
   const handleExcluir = (id) => {
@@ -32,6 +40,10 @@ const ListaTurmas = () => {
 
   return (
     <div className={styles.container}>
+      <button className={styles.adicionar} onClick={handleAdicionar}>
+        Adicionar
+      </button>
+
       <table className={styles.tabela}>
         <thead>
           <tr>
@@ -63,6 +75,12 @@ const ListaTurmas = () => {
                   onClick={() => handleExcluir(turma.id)}
                 >
                   Excluir
+                </button>
+                <button
+                  className={styles.adicionar}
+                  onClick={() => handleAdicionarTurma(turma.id)}
+                >
+                  Add Alunos
                 </button>
               </td>
             </tr>
