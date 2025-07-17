@@ -1,4 +1,4 @@
-import ListaAulas from "../../components/ListaAulas";
+import ListaAulas from "../../components/Listar/ListaAulas";
 import Container2 from "../../components/Container2";
 import Header from "../../components/Header";
 import Title from "../../components/Title";

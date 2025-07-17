@@ -15,7 +15,7 @@ const CadastroGastoForm = () => {
       valor: parseFloat(valor),
     };
 
-    fetch("http://localhost:8080/gastos?funcionarioId=1", {
+    fetch("http://localhost:8080/gastos?funcionarioId=4", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(novoGasto),

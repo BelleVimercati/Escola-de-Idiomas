@@ -23,7 +23,7 @@ const AdicionarAlunoTurmaForm = () => {
     e.preventDefault();
 
     fetch(
-      `http://localhost:8080/alunos/${alunoId}/adicionar-turma?turmaId=${turmaId}&funcionarioId=2`,
+      `http://localhost:8080/alunos/${alunoId}/adicionar-turma?turmaId=${turmaId}&funcionarioId=3`,
       {
         method: "PUT",
       }

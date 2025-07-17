@@ -11,7 +11,6 @@ const CadastroAulaPage = () => {
   const [data, setData] = useState("");
   const [inicio, setInicio] = useState("");
   const [fim, setFim] = useState("");
-  const [valor, setValor] = useState("");
   const [professorId, setProfessorId] = useState("");
   const [turmaId, setTurmaId] = useState("");
 
@@ -40,7 +39,6 @@ const CadastroAulaPage = () => {
       data,
       inicio: inicioCompleto,
       fim: fimCompleto,
-      valor: parseFloat(valor),
       professor: {
         id: parseInt(professorId),
       },
@@ -49,7 +47,7 @@ const CadastroAulaPage = () => {
       },
     };
 
-    fetch(`http://localhost:8080/aulas?funcionarioId=2`, {
+    fetch(`http://localhost:8080/aulas?funcionarioId=3`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(novaAula),
@@ -91,15 +89,6 @@ const CadastroAulaPage = () => {
           type="time"
           value={fim}
           onChange={(e) => setFim(e.target.value)}
-          required
-        />
-
-        <label className={styles.label}>Valor (R$)</label>
-        <Input
-          type="number"
-          step="0.01"
-          value={valor}
-          onChange={(e) => setValor(e.target.value)}
           required
         />
 

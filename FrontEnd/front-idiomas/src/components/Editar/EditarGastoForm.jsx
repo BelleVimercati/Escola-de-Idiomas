@@ -28,7 +28,7 @@ const EditarGastoForm = () => {
       valor: parseFloat(valor),
     };
 
-    fetch(`http://localhost:8080/gastos/${id}?funcionarioId=1`, {
+    fetch(`http://localhost:8080/gastos/${id}?funcionarioId=4`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(gastoAtualizado),

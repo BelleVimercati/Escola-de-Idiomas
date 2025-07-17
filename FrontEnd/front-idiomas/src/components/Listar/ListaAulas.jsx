@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Lista.module.css";
+import styles from "../../styles/Lista.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ListaAulas = () => {
@@ -26,7 +26,7 @@ const ListaAulas = () => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/aulas/${id}?funcionarioId=2`, {
+    fetch(`http://localhost:8080/aulas/${id}?funcionarioId=3`, {
       method: "DELETE",
     })
       .then(() => {

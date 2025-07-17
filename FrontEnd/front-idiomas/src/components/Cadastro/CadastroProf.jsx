@@ -13,6 +13,7 @@ const CadastroProfessorForm = () => {
   const [endereco, setEndereco] = useState("");
   const [telefone, setTelefone] = useState("");
   const [salario, setSalario] = useState("");
+  const [senha, setSenha] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +21,7 @@ const CadastroProfessorForm = () => {
     const novoProfessor = {
       nome,
       email,
+      senha,
       matricula: parseInt(matricula),
       endereco,
       telefone,
@@ -55,6 +57,13 @@ const CadastroProfessorForm = () => {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <label className={styles.label}>Senha</label>
+      <Input
+        type="password"
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
       />
 
       <label className={styles.label}>Matrícula</label>

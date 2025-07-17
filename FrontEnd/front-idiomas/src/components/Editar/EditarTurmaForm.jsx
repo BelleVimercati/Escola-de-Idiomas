@@ -17,7 +17,7 @@ const EditarTurmaForm = () => {
   const [valor, setValor] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/turmas/${id}?funcionarioId=2`)
+    fetch(`http://localhost:8080/turmas/${id}?funcionarioId=3`)
       .then((res) => res.json())
       .then((data) => {
         setIdentificador(data.identificador);

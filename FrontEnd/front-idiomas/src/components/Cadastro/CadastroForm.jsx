@@ -9,6 +9,7 @@ const CadastroAlunoForm = () => {
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [matricula, setMatricula] = useState("");
   const [endereco, setEndereco] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -19,12 +20,13 @@ const CadastroAlunoForm = () => {
     const novoAluno = {
       nome,
       email,
+      senha,
       matricula: parseInt(matricula),
       endereco,
       telefone,
     };
 
-    fetch("http://localhost:8080/alunos?funcionarioId=2", {
+    fetch("http://localhost:8080/alunos?funcionarioId=3", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(novoAluno),
@@ -53,6 +55,13 @@ const CadastroAlunoForm = () => {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <label className={styles.label}>Senha</label>
+      <Input
+        type="password"
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
       />
 
       <label className={styles.label}>Matricula</label>

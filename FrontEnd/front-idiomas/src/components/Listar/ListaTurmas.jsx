@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Lista.module.css";
+import styles from "../../styles/Lista.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ListaTurmas = () => {
   const navigate = useNavigate();
   const [turmas, setTurmas] = useState([]);
+  const [alunosModal, setAlunosModal] = useState([]);
+  const [modalAberto, setModalAberto] = useState(false);
 
   const handleAdicionar = () => {
     navigate("/turmas/novo");
@@ -29,13 +31,26 @@ const ListaTurmas = () => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/turmas/${id}?funcionarioId=2`, {
+    fetch(`http://localhost:8080/turmas/${id}?funcionarioId=3`, {
       method: "DELETE",
     })
       .then(() => {
         setTurmas((prev) => prev.filter((prof) => prof.id !== id));
       })
       .catch((err) => console.error("Erro ao excluir turmas:", err));
+  };
+
+  const abrirModalAlunos = (turmaId) => {
+    fetch(`http://localhost:8080/turmas/${turmaId}/alunos`)
+      .then((res) => res.json())
+      .then((alunos) => {
+        setAlunosModal(alunos);
+        setModalAberto(true);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar alunos:", err);
+        alert("Erro ao buscar alunos");
+      });
   };
 
   return (
@@ -82,11 +97,45 @@ const ListaTurmas = () => {
                 >
                   Add Alunos
                 </button>
+                <button
+                  className={styles.abrir}
+                  onClick={() => abrirModalAlunos(turma.id)}
+                >
+                  Ver Alunos
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Modal */}
+      {modalAberto && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setModalAberto(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>Alunos da Turma</h2>
+            <ul>
+              {alunosModal.length === 0 ? (
+                <li>Nenhum aluno nessa turma</li>
+              ) : (
+                alunosModal.map((aluno) => <li key={aluno.id}>{aluno.nome}</li>)
+              )}
+            </ul>
+            <button
+              className={styles.buttonModal}
+              onClick={() => setModalAberto(false)}
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

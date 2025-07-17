@@ -1,10 +1,19 @@
 import styles from "../styles/Header.module.css";
 import { Link } from "react-router-dom";
+import Button from "./Button";
+import { useNavigate } from "react-router-dom";
+
 
 const Header = () => {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <header className={styles.header}>
-      <Link to="/" className={styles.title}>
+      <Link to="/main" className={styles.title}>
         Sistema Escolar 📚
       </Link>
 
@@ -24,9 +33,14 @@ const Header = () => {
         <Link to="/relatorio" className={styles.button}>
           Relatorio
         </Link>
-        <Link to="/logout" className={styles.button}>
-          Sair
+        <Link to="/gastos" className={styles.button}>
+          Gastos
         </Link>
+        <Button
+          onClick={logout}
+          className={styles.buttonLogout}
+          text="Logout"
+        ></Button>
       </nav>
     </header>
   );

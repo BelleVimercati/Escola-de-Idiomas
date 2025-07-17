@@ -1,37 +1,37 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Lista.module.css";
+import styles from "../../styles/Lista.module.css";
 import { useNavigate } from "react-router-dom";
 
-const ListaProfessores = () => {
+const ListaAlunos = () => {
   const navigate = useNavigate();
-  const [professores, setProfessores] = useState([]);
+  const [Alunos, setAlunos] = useState([]);
 
   const handleAdicionar = () => {
-    navigate("/professores/novo");
+    navigate("/alunos/novo");
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/professores")
+    fetch("http://localhost:8080/alunos")
       .then((res) => res.json())
-      .then((data) => setProfessores(data))
-      .catch((err) => console.error("Erro ao buscar professores:", err));
+      .then((data) => setAlunos(data))
+      .catch((err) => console.error("Erro ao buscar alunos:", err));
   }, []);
 
   const handleEditar = (id) => {
-    navigate(`/professores/${id}/editar`);
+    navigate(`/alunos/${id}/editar`);
   };
 
   const handleExcluir = (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/professores/${id}?funcionarioId=2`, {
+    fetch(`http://localhost:8080/alunos/${id}?funcionarioId=3`, {
       method: "DELETE",
     })
       .then(() => {
-        setProfessores((prev) => prev.filter((prof) => prof.id !== id));
+        setAlunos((prev) => prev.filter((prof) => prof.id !== id));
       })
-      .catch((err) => console.error("Erro ao excluir professor:", err));
+      .catch((err) => console.error("Erro ao excluir aluno:", err));
   };
 
   return (
@@ -49,21 +49,21 @@ const ListaProfessores = () => {
           </tr>
         </thead>
         <tbody>
-          {professores.map((prof) => (
-            <tr key={prof.id}>
-              <td>{prof.nome}</td>
-              <td>{prof.matricula}</td>
-              <td>{prof.email}</td>
+          {Alunos.map((aluno) => (
+            <tr key={aluno.id}>
+              <td>{aluno.nome}</td>
+              <td>{aluno.matricula}</td>
+              <td>{aluno.email}</td>
               <td>
                 <button
                   className={styles.editar}
-                  onClick={() => handleEditar(prof.id)}
+                  onClick={() => handleEditar(aluno.id)}
                 >
                   Editar
                 </button>
                 <button
                   className={styles.excluir}
-                  onClick={() => handleExcluir(prof.id)}
+                  onClick={() => handleExcluir(aluno.id)}
                 >
                   Excluir
                 </button>
@@ -76,4 +76,4 @@ const ListaProfessores = () => {
   );
 };
 
-export default ListaProfessores;
+export default ListaAlunos;

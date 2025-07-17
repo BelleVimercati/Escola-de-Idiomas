@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Lista.module.css";
+import styles from "../../styles/Lista.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ListaGastos = () => {
@@ -19,14 +19,14 @@ const ListaGastos = () => {
   }, []);
 
   const handleEditar = (id) => {
-      navigate(`/gastos/${id}/editar`);
+    navigate(`/gastos/${id}/editar`);
   };
 
   const handleExcluir = (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/gastos/${id}?funcionarioId=1`, {
+    fetch(`http://localhost:8080/gastos/${id}?funcionarioId=4`, {
       method: "DELETE",
     })
       .then(() => {

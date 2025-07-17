@@ -9,7 +9,6 @@ public abstract class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-
     @Column(nullable = false, unique = false)
     private String nome;
 
@@ -18,11 +17,19 @@ public abstract class Usuario {
 
     @Column(nullable = false, unique = true)
     private String telefone;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    public Usuario(String nome, String endereco, String telefone) {
+    @Column(nullable = true)
+    private String senha;
+
+    public Usuario(String nome, String endereco, String telefone, String email, String senha) {
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
     }
 
     public Usuario() {
@@ -47,5 +54,23 @@ public abstract class Usuario {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    
 
 }

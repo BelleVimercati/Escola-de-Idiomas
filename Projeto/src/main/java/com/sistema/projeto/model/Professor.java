@@ -20,9 +20,6 @@ public class Professor extends Usuario {
     @Column(nullable = false, unique = true)
     private int salario;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
     @OneToMany(mappedBy = "professor")
     @JsonIgnore
     private List<Aula> aulas = new ArrayList<>();
@@ -31,10 +28,9 @@ public class Professor extends Usuario {
         super(); // necessário porque Usuario tem construtor com parâmetros
     }
 
-    public Professor(String nome, String endereco, String telefone, int matricula, String email) {
-        super(nome, endereco, telefone);
+    public Professor(String nome, String endereco, String telefone, int matricula, String email, String senha) {
+        super(nome, endereco, telefone, email, senha);
         this.matricula = matricula;
-        this.email = email;
     }
 
     public Long getId() {
@@ -60,12 +56,4 @@ public class Professor extends Usuario {
     public void setMatricula(int matricula) {
         this.matricula = matricula;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    } 
 }

@@ -38,7 +38,7 @@ const EditarAlunoForm = () => {
       telefone,
     };
 
-    fetch(`http://localhost:8080/alunos/${id}?funcionarioId=2`, {
+    fetch(`http://localhost:8080/alunos/${id}?funcionarioId=3`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(alunoAtualizado),

@@ -11,7 +11,7 @@
 }
 
 .nav {
-  display: flex;
+  display: block;
   gap: 1rem;
 }
 
@@ -33,6 +33,16 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+}
+
+.buttonLogout {
+  color: #f8f7ff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 0px;
 }
 
 .button:hover {
