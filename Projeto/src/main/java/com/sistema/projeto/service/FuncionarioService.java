@@ -34,6 +34,8 @@ public class FuncionarioService {
             funcionario.setTelefone(atualizado.getTelefone());
             funcionario.setSalario(atualizado.getSalario());
             funcionario.setCargo(atualizado.getCargo());
+            funcionario.setSenha(atualizado.getSenha());
+            funcionario.setEmail(atualizado.getEmail());
             return funcionarioRepository.save(funcionario);
         }).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
     }

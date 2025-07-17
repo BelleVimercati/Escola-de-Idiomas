@@ -41,3 +41,64 @@
   cursor: pointer;
   border-radius: 4px;
 }
+
+.adicionar {
+  background-color: #4caf5c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  max-width: 100px;
+  align-self: flex-end;
+}
+
+.abrir {
+  background-color: #d512cb;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  max-width: 100px;
+  align-self: flex-end;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.buttonModal {
+  background-color: #737179;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  max-width: 100px;
+  align-self: flex-end;
+}

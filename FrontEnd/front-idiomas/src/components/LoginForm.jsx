@@ -3,25 +3,29 @@ import axios from "axios";
 import styles from "../styles/LoginForm.module.css";
 import Input from "./Input";
 import Button from "./Button";
+import {useNavigate } from "react-router-dom";
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+    const navigate = useNavigate();
+
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        // eslint-disable-next-line no-undef
-        `${process.env.REACT_APP_API_URL}/login`,
-        {
-          email,
-          senha,
-        }
-      );
-      console.log("Login bem-sucedido:", response.data);
-      // redirecionar ou armazenar token, etc.
+      const response = await axios.post(`http://localhost:8080/auth/login`, {
+        email,
+        senha,
+      });
+
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+
+      navigate("/main");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
+      alert("Email ou senha inválidos");
     }
   };
 

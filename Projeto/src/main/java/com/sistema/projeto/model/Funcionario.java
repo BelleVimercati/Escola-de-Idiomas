@@ -22,8 +22,8 @@ public class Funcionario extends Usuario{
         super(); // necessário porque Usuario tem construtor com parâmetros
     }
     
-    public Funcionario(String nome, String endereco, String telefone, Float salario, Cargo cargo) {
-        super(nome, endereco, telefone);
+    public Funcionario(String nome, String endereco, String telefone, Float salario, Cargo cargo, String email, String senha) {
+        super(nome, endereco, telefone, email, senha);
         this.salario = salario;
         this.cargo = cargo;
     }

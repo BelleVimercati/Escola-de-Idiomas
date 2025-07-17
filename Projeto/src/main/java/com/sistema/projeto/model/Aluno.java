@@ -19,9 +19,6 @@ public class Aluno extends Usuario{
     @Column(nullable = false, unique = true)
     private int matricula;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
     @ManyToMany
     @JsonBackReference
     @JoinTable(
@@ -32,10 +29,9 @@ public class Aluno extends Usuario{
     private List<Turma> turmas = new ArrayList<>();
 
 
-    public Aluno(String nome, String endereco, String telefone, int matricula, String email) {
-        super(nome, endereco, telefone);
+    public Aluno(String nome, String endereco, String telefone, int matricula, String email, String senha) {
+        super(nome, endereco, telefone, email, senha);
         this.matricula = matricula;
-        this.email = email;
     }
 
     public Aluno() {
@@ -52,12 +48,6 @@ public class Aluno extends Usuario{
     public void setMatricula(int matricula) {
         this.matricula = matricula;
     }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public List<Turma> getTurmas() {
         return turmas;
@@ -66,6 +56,4 @@ public class Aluno extends Usuario{
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
     }
-    
-
 }

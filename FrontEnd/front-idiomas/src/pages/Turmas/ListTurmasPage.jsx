@@ -1,7 +1,7 @@
 import Title from "../../components/Title";
 import Header from "../../components/Header";
 import Container2 from "../../components/Container2";
-import ListaTurmas from "../../components/ListaTurmas";
+import ListaTurmas from "../../components/Listar/ListaTurmas";
 
 const ListProfPage = () => {
   return (

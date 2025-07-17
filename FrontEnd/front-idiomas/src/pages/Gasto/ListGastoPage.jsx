@@ -1,7 +1,7 @@
 import Title from "../../components/Title";
 import Header from "../../components/Header";
 import Container2 from "../../components/Container2";
-import ListaGasto from "../../components/ListaGasto"
+import ListaGasto from "../../components/Listar/ListaGasto"
 
 
 const ListGastoPage = () => {
@@ -9,7 +9,7 @@ const ListGastoPage = () => {
     <div>
       <Header />
       <Container2>
-        <Title>Turmas</Title>
+        <Title>Gastos</Title>
         <ListaGasto />
       </Container2>
     </div>

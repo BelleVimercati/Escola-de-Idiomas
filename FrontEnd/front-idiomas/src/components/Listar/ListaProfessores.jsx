@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Lista.module.css";
+import styles from "../../styles/Lista.module.css";
+import { useNavigate } from "react-router-dom";
 
 const ListaProfessores = () => {
+  const navigate = useNavigate();
   const [professores, setProfessores] = useState([]);
+
+  const handleAdicionar = () => {
+    navigate("/professores/novo");
+  };
 
   useEffect(() => {
     fetch("http://localhost:8080/professores")
@@ -12,16 +18,14 @@ const ListaProfessores = () => {
   }, []);
 
   const handleEditar = (id) => {
-    console.log("Editar professor com ID:", id);
-    // Aqui você pode redirecionar para a página de edição, ex:
-    // navigate(`/professores/editar/${id}`);
+    navigate(`/professores/${id}/editar`);
   };
 
   const handleExcluir = (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/professores/${id}`, {
+    fetch(`http://localhost:8080/professores/${id}?funcionarioId=3`, {
       method: "DELETE",
     })
       .then(() => {
@@ -31,7 +35,10 @@ const ListaProfessores = () => {
   };
 
   return (
-    <div className={styles.professorescontainer}>
+    <div className={styles.container}>
+      <button className={styles.adicionar} onClick={handleAdicionar}>
+        Adicionar
+      </button>
       <table className={styles.tabela}>
         <thead>
           <tr>

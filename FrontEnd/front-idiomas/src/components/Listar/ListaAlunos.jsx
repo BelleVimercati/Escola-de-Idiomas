@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Lista.module.css";
+import styles from "../../styles/Lista.module.css";
+import { useNavigate } from "react-router-dom";
 
 const ListaAlunos = () => {
+  const navigate = useNavigate();
   const [Alunos, setAlunos] = useState([]);
+
+  const handleAdicionar = () => {
+    navigate("/alunos/novo");
+  };
 
   useEffect(() => {
     fetch("http://localhost:8080/alunos")
@@ -12,16 +18,14 @@ const ListaAlunos = () => {
   }, []);
 
   const handleEditar = (id) => {
-    console.log("Editar aluno com ID:", id);
-    // Aqui você pode redirecionar para a página de edição, ex:
-    // navigate(`/Alunos/editar/${id}`);
+    navigate(`/alunos/${id}/editar`);
   };
 
   const handleExcluir = (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja excluir?");
     if (!confirmacao) return;
 
-    fetch(`http://localhost:8080/alunos/${id}`, {
+    fetch(`http://localhost:8080/alunos/${id}?funcionarioId=3`, {
       method: "DELETE",
     })
       .then(() => {
@@ -32,6 +36,9 @@ const ListaAlunos = () => {
 
   return (
     <div className={styles.container}>
+      <button className={styles.adicionar} onClick={handleAdicionar}>
+        Adicionar
+      </button>
       <table className={styles.tabela}>
         <thead>
           <tr>
@@ -42,21 +49,21 @@ const ListaAlunos = () => {
           </tr>
         </thead>
         <tbody>
-          {Alunos.map((prof) => (
-            <tr key={prof.id}>
-              <td>{prof.nome}</td>
-              <td>{prof.matricula}</td>
-              <td>{prof.email}</td>
+          {Alunos.map((aluno) => (
+            <tr key={aluno.id}>
+              <td>{aluno.nome}</td>
+              <td>{aluno.matricula}</td>
+              <td>{aluno.email}</td>
               <td>
                 <button
                   className={styles.editar}
-                  onClick={() => handleEditar(prof.id)}
+                  onClick={() => handleEditar(aluno.id)}
                 >
                   Editar
                 </button>
                 <button
                   className={styles.excluir}
-                  onClick={() => handleExcluir(prof.id)}
+                  onClick={() => handleExcluir(aluno.id)}
                 >
                   Excluir
                 </button>
